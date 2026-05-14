@@ -1,57 +1,97 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ludex Games</title>
-
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
-
-    <div class="container">
-
-        <h1>🎮 Ludex Games</h1>
-
-        <div id="profile"></div>
-
-        <div class="wallet">
-            💰 Balance:
-            <span id="balance">100</span> Birr
+    <div class="app-container">
+        <!-- Header with Profile & Balance -->
+        <div class="header">
+            <div class="profile">
+                <div class="avatar" id="userAvatar">👤</div>
+                <div class="user-info">
+                    <span id="userName">Player</span>
+                    <small id="userId"></small>
+                </div>
+            </div>
+            <div class="wallet-card">
+                <span class="wallet-label">💰 BALANCE</span>
+                <span class="wallet-amount" id="balance">0</span>
+                <span class="wallet-currency">Birr</span>
+            </div>
         </div>
 
-        <h2>🃏 Card Flip</h2>
-
-        <p>Choose a card</p>
-
-        <div class="cards">
-
-            <div class="card" onclick="flipCard(this)">
-                ?
+        <!-- Games Grid -->
+        <div class="section-title">
+            <span>🎮 PLAY GAMES</span>
+            <span class="title-badge">10% FEE ON WIN</span>
+        </div>
+        <div class="games-grid">
+            <div class="game-card" data-game="ludo">
+                <div class="game-icon">🎲</div>
+                <div class="game-name">Ludo</div>
+                <div class="game-badge">14</div>
             </div>
-
-            <div class="card" onclick="flipCard(this)">
-                ?
+            <div class="game-card" data-game="bingo">
+                <div class="game-icon">🎯</div>
+                <div class="game-name">Bingo</div>
+                <div class="game-badge">6</div>
             </div>
-
-            <div class="card" onclick="flipCard(this)">
-                ?
+            <div class="game-card" data-game="conquer">
+                <div class="game-icon">⚔️</div>
+                <div class="game-name">Conquer</div>
+                <div class="game-badge new">NEW</div>
             </div>
-
+            <div class="game-card" data-game="crazy">
+                <div class="game-icon">🔥</div>
+                <div class="game-name">Crazy</div>
+                <div class="game-badge hot">HOT</div>
+            </div>
+            <div class="game-card" data-game="dama">
+                <div class="game-icon">👑</div>
+                <div class="game-name">Dama</div>
+                <div class="game-badge new">NEW</div>
+            </div>
+            <div class="game-card" data-game="cardflip">
+                <div class="game-icon">🃏</div>
+                <div class="game-name">Card Flip</div>
+                <div class="game-badge">20x</div>
+            </div>
         </div>
 
-        <div id="result"></div>
+        <!-- Invite Section -->
+        <div class="invite-section">
+            <div class="invite-text">
+                <span>👥 INVITE FRIENDS</span>
+                <small>Earn 10% of their deposits!</small>
+            </div>
+            <button class="invite-btn" id="inviteBtn">Invite →</button>
+        </div>
 
+        <!-- Bottom Navigation (optional) -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-nav="home">🏠 Home</div>
+            <div class="nav-item" data-nav="profile">👤 Profile</div>
+            <div class="nav-item" data-nav="transactions">📜 History</div>
+            <div class="nav-item" data-nav="support">❓ Help</div>
+        </div>
+    </div>
+
+    <!-- Modal for Games -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Game</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
     </div>
 
     <script src="app.js"></script>
-
 </body>
-
 </html>

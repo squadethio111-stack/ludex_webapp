@@ -3,6 +3,9 @@ import sqlite3
 import requests
 from bs4 import BeautifulSoup
 from telegram.request import HTTPXRequest
+from telegram import WebAppInfo
+from flask import Flask, request, jsonify
+from threading import Thread
 
 from telegram import (
     Update,
@@ -213,7 +216,8 @@ async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_main_menu(update):
     keyboard = [
-        [InlineKeyboardButton("🎲 Dice Game", callback_data='dice')],
+        [InlineKeyboardButton("🎮 Play Games", 
+                              web_app=WebAppInfo(url="https://ludex-webapp-fozf.vercel.app/"))],
         [
             InlineKeyboardButton("💰 Deposit", callback_data='deposit'),
             InlineKeyboardButton("🏧 Withdraw", callback_data='withdraw')
@@ -633,6 +637,41 @@ async def error_handler(update, context):
         pass
 
     app.add_error_handler(error_handler)
+
+# Create Flask app
+flask_app = Flask(__name__)
+
+@flask_app.route('/api/balance', methods=['GET'])
+def api_get_balance():
+    user_id = request.args.get('user_id', type=int)
+    if not user_id:
+        return jsonify({'error': 'No user_id'}), 400
+    bal = get_balance(user_id)   # your existing function
+    return jsonify({'balance': bal})
+
+@flask_app.route('/api/game/result', methods=['POST'])
+def api_game_result():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    bet = data.get('bet', 0)
+    won = data.get('won', False)
+    if not user_id:
+        return jsonify({'error': 'No user_id'}), 400
+    if won:
+        win_amount = int(bet * 0.9)   # 10% fee
+        update_balance(user_id, win_amount)
+        new_balance = get_balance(user_id)
+        return jsonify({'success': True, 'new_balance': new_balance, 'won': win_amount})
+    else:
+        update_balance(user_id, -bet)
+        new_balance = get_balance(user_id)
+        return jsonify({'success': True, 'new_balance': new_balance, 'lost': bet})
+
+def run_flask():
+    flask_app.run(host='0.0.0.0', port=5000, debug=False)
+
+# Start Flask in background thread
+Thread(target=run_flask, daemon=True).start()
 
 print("🔥 Ludex Games Bot Running...")
 app.run_polling()
