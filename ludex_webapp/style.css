@@ -1,0 +1,71 @@
+body {
+
+    background: #0f172a;
+    color: white;
+
+    font-family: Arial;
+
+    text-align: center;
+
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+
+    max-width: 400px;
+    margin: auto;
+}
+
+.wallet {
+
+    margin: 20px 0;
+
+    font-size: 20px;
+}
+
+.cards {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+.card {
+
+    width: 80px;
+    height: 120px;
+
+    background: white;
+
+    color: black;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 40px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.card:hover {
+
+    transform: scale(1.05);
+}
+
+#result {
+
+    margin-top: 25px;
+
+    font-size: 24px;
+}
