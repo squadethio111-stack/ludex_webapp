@@ -17,7 +17,7 @@ if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
 // ========== BACKEND API CONFIGURATION ==========
 // IMPORTANT: Replace with your actual backend URL (ngrok or deployed server)
 // For local testing with ngrok: "https://your-ngrok-id.ngrok.io"
-const API_BASE = "https://hatchery-film-sworn.ngrok-free.dev";  // <-- CHANGE THIS
+const API_BASE = "https://ludex-bot-backend.onrender.com";  // <-- CHANGE THIS
 // If your bot is running locally with ngrok, put the ngrok URL here.
 // If you don't have backend yet, the app will work in "demo mode" with local balance.
 
