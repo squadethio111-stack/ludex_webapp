@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from telegram.request import HTTPXRequest
 from telegram import WebAppInfo
 from flask import Flask, request, jsonify
+from flask_cors import CORS 
 from threading import Thread
 
 from telegram import (
@@ -634,6 +635,7 @@ async def error_handler(update, context):
 
 # Create Flask app
 flask_app = Flask(__name__)
+CORS(flask_app)  # Enable CORS for all routes
 
 @flask_app.route('/api/balance', methods=['GET'])
 def api_get_balance():
