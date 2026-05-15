@@ -216,8 +216,7 @@ async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_main_menu(update):
     keyboard = [
-        [InlineKeyboardButton("🎮 Play Games", 
-                              web_app=WebAppInfo(url="https://ludex-webapp-fozf.vercel.app/"))],
+        [InlineKeyboardButton("🎮 Play Games", web_app=WebAppInfo(url="https://ludexwebapp1.vercel.app/"))],
         [
             InlineKeyboardButton("💰 Deposit", callback_data='deposit'),
             InlineKeyboardButton("🏧 Withdraw", callback_data='withdraw')
@@ -227,20 +226,15 @@ async def show_main_menu(update):
             InlineKeyboardButton("📜 Transactions", callback_data='history')
         ]
     ]
-
     reply_markup = InlineKeyboardMarkup(keyboard)
-
-    # Note: We send the photo. If it's a message from a command, we use reply_photo.
-    # If it's from a callback query, we'd use send_photo, but start/register use message.
+    
     target = update.message if update.message else update.callback_query.message
-
+    
     await target.reply_photo(
-        photo=open('C:\\Users\\Bamlak\\telegram_game_bot\\photo_2026-05-13_16-33-49.jpg', 'rb'), 
-        caption="<b>Main Menu</b>\nChoose an option to begin.",
+        photo=open('photo_2026-05-13_16-33-49.jpg', 'rb'),
+        caption="<b>Ludex Games</b>\nChoose an option:",
         parse_mode='HTML',
-        reply_markup=reply_markup,
-        read_timeout=60,
-        write_timeout=60
+        reply_markup=reply_markup
     )
 
 # =========================
