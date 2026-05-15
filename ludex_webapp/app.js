@@ -28,16 +28,19 @@ let demoMode = false;  // becomes true if API fails
 async function fetchBalance() {
     if (!user || !user.id) return;
     try {
-        const response = await fetch(`${API_BASE}/api/balance?user_id=${user.id}`);
+        const response = await fetch(`${API_BASE}/api/balance?user_id=${user.id}`, {
+            headers: {
+                'ngrok-skip-browser-warning': 'true'
+            }
+        });
         if (!response.ok) throw new Error();
         const data = await response.json();
         currentBalance = data.balance;
         document.getElementById('balance').innerText = currentBalance;
         demoMode = false;
     } catch (error) {
-        console.warn("Backend not reachable – using demo mode");
+        console.warn("Backend not reachable – using demo mode", error);
         demoMode = true;
-        // Demo balance (starting 100)
         if (currentBalance === 0) currentBalance = 100;
         document.getElementById('balance').innerText = currentBalance;
     }
@@ -52,23 +55,15 @@ function updateBalanceUI(newBalance) {
 // Send game result to backend
 async function submitGameResult(userId, bet, won) {
     if (demoMode) {
-        // Simulate balance change with 10% fee
-        if (won) {
-            const winAmount = Math.floor(bet * 0.9);
-            currentBalance += winAmount;
-            updateBalanceUI(currentBalance);
-            return { success: true, new_balance: currentBalance, won: winAmount };
-        } else {
-            currentBalance -= bet;
-            updateBalanceUI(currentBalance);
-            return { success: true, new_balance: currentBalance, lost: bet };
-        }
+        // ... demo logic ...
     }
-    
     try {
         const res = await fetch(`${API_BASE}/api/game/result`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            },
             body: JSON.stringify({ user_id: userId, bet: bet, won: won })
         });
         const data = await res.json();
@@ -81,7 +76,6 @@ async function submitGameResult(userId, bet, won) {
         return null;
     }
 }
-
 // ========== MODAL MANAGEMENT ==========
 const modal = document.getElementById('gameModal');
 const modalTitle = document.getElementById('modalTitle');
